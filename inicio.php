@@ -13,7 +13,7 @@
     }
 
     body {
-        background-image: ("c:\Users\Aluno\Downloads\unicorniocerto.png"); 
+         background-image: url("./unicorniocerto.png"); *A IMAGEM TEM QUE ESTAR NA MESMA PASTA QUE OS CÓDIGOS*
         background-repeat: no-repeat;
         background-size: cover;
         height: 500px; 
