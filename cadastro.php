@@ -1,280 +1,355 @@
-<?php
-include "conexao.php";
-
-$mensagem = "";
-
-if (isset($_POST['inserir'])) {
-
-    $login = trim($_POST['login']);
-    $senha = trim($_POST['senha']);
-    $erro = false;
-
-    // Validação de senha
-    $senhaf = preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $senha);
-    if (!$senhaf) {
-        $mensagem .= "<p class='erro'>A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula, número e símbolo.</p>";
-        $erro = true;
-    }
-
-    // Validação de email
-    $emailval = filter_var($login, FILTER_VALIDATE_EMAIL);
-    if (!$emailval) {
-        $mensagem .= "<p class='erro'>Digite um e-mail válido.</p>";
-        $erro = true;
-    }
-
-    // Se não houver erro, insere no banco
-    if (!$erro) {
-
-        $senhaCrip = password_hash($senha, PASSWORD_DEFAULT);
-
-        $stmt = $conexao->prepare("INSERT INTO usuarios (login, senha) VALUES (?, ?)");
-
-        if (!$stmt) {
-            die("Erro no prepare: " . $conexao->error);
-        }
-
-        $stmt->bind_param("ss", $login, $senhaCrip);
-
-        if ($stmt->execute()) {
-
-        header("Location: inicio.php");
-        exit;
-
-            $mensagem = "<p class='sucesso'>Cadastro realizado com sucesso!</p>";
-        } else {
-            $mensagem = "<p class='erro'>Erro ao cadastrar: " . $stmt->error . "</p>";
-        }
-
-        $stmt->close();
-    }
-}
-?>
-
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Cadastro</title>
+    <title>Cadastro</title>
 
-<style>
+    <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', sans-serif;
+        }
 
-    :root {
-        --brand-gradient: linear-gradient(135deg, #f472b6 0%, #facc15 100%);
-        --bg-gradient: linear-gradient(135deg, #ffe0f0 0%, #fff8d6 50%, #ffd6e8 100%);
-        --color-primary: #be185d;
-        --color-primary-light: #f472b6;
-        --color-border: #fbb6d4;
-        --color-text-main: #831843;
-        --color-text-dim: #f0abcb;
-        --shadow-main: 0 8px 32px rgba(220, 80, 140, 0.15);
-        --shadow-subtle: 0 2px 8px rgba(220, 80, 140, 0.08);
-        --transition-fast: 0.2s ease;
-    }
+        body{
+            background: linear-gradient(135deg, #ffe6f2, #ffd6eb);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+        .container{
+            width:400px;
+            background:white;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.15);
+        }
 
-    body {
-        background: var(--bg-gradient);
-        font-family: 'Poppins', sans-serif;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+        h2{
+            text-align:center;
+            color:#8b3a62;
+            margin-bottom:25px;
+        }
 
-    .container {
-        width: 100%;
-        max-width: 420px;
-    }
+        form{
+            display:flex;
+            flex-direction:column;
+        }
 
-    /* 3. Componente Card */
-    .card {
-        background: #ffffff;
-        padding: 40px 36px;
-        border-radius: 24px;
-        box-shadow: var(--shadow-main), var(--shadow-subtle);
-        border: 1.5px solid #f9c6de;
-    }
+        label{
+            margin-top:12px;
+            margin-bottom:5px;
+            color:#8b3a62;
+            font-weight:600;
+        }
 
-    .logo-circle {
-        width: 64px;
-        height: 64px;
-        background: var(--brand-gradient);
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 26px;
-    }
+        input{
+            padding:12px;
+            border-radius:12px;
+            border:1px solid #f8c8dc;
+            outline:none;
+            transition:0.3s;
+        }
 
-    /* 4. Tipografia */
-    h2 {
-        text-align: center;
-        color: var(--color-primary);
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 6px;
-    }
+        input:focus{
+            border-color:#d63384;
+            box-shadow:0 0 8px rgba(214,51,132,0.3);
+        }
 
-    .subtitle {
-        text-align: center;
-        color: var(--color-text-dim);
-        font-size: 13px;
-        margin-bottom: 28px;
-    }
+        button{
+            margin-top:25px;
+            padding:12px;
+            border:none;
+            border-radius:25px;
+            background:#d63384;
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
 
-    /* 5. Formulários */
-    label {
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--color-primary);
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-    }
+        button:hover{
+            background:#c2186a;
+            transform:scale(1.03);
+        }
 
-    input {
-        width: 100%;
-        padding: 12px 16px;
-        margin-bottom: 20px;
-        border: 1.5px solid var(--color-border);
-        border-radius: 12px;
-        background: #fff5fa;
-        font-family: inherit;
-        font-size: 14px;
-        color: var(--color-text-main);
-        outline: none;
-        transition: var(--transition-fast);
-    }
+        .mensagem{
+            margin-top:15px;
+            text-align:center;
+            font-weight:bold;
+            color:#8b3a62;
+        }
 
-    input:focus {
-        border-color: var(--color-primary-light);
-        box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.15);
-        background: #ffffff;
-    }
-
-    input::placeholder {
-        color: var(--color-text-dim);
-    }
-
-    /* 6. Botões */
-    button {
-        width: 100%;
-        padding: 14px;
-        background: var(--brand-gradient);
-        color: #ffffff;
-        border: none;
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 600;
-        font-family: inherit;
-        cursor: pointer;
-        transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
-        margin-top: 4px;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    button:hover {
-        opacity: 0.95;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(244, 114, 182, 0.2);
-    }
-
-    button:active {
-        transform: translateY(0px);
-    }
-
-    /* 7. Estados de Feedback */
-    .erro, .sucesso {
-        font-size: 13px;
-        font-weight: 500;
-        text-align: center;
-        padding: 12px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        border: 1px solid;
-    }
-
-    .erro {
-        color: #be123c;
-        background: #fff1f5;
-        border-color: #fda4af;
-    }
-
-    .sucesso {
-        color: #166534;
-        background: #f0fdf4;
-        border-color: #86efac;
-    }
-
-    /* 8. Rodapé */
-    .footer-link {
-        text-align: center;
-        margin-top: 24px;
-        font-size: 13px;
-        color: var(--color-text-dim);
-    }
-
-    .footer-link a {
-        color: var(--color-primary);
-        font-weight: 600;
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-
-    .footer-link a:hover {
-        text-decoration: underline;
-        color: var(--color-primary-light);
-    }
-</style>
+    </style>
 </head>
+
 <body>
+
 <div class="container">
-    <div class="card">
-        <div class="logo-circle">🌸</div>
-        <h2>Criar conta</h2>
-        <p class="subtitle">Preencha os dados para se registrar</p>
 
-        <?php echo $mensagem; ?>
+    <h2>CADASTRO DE USUÁRIOS</h2>
 
-        <form method="post">
+    <form method="post">
 
-            <label>Nome:</label>
-            <input name="nome" size="30" required placeholder="Seu nome completo" required>
+        <label>Nome:</label>
+        <input name="nome" type="text" required>
 
-            <label>E-mail/Celular</label>
-            <input name="email_tel" type="text" placeholder="Digite aqui..." autocomplete="off" required>
+        <label>E-mail ou telefone:</label>
+        <input name="email_tel" type="text" required>
 
-            <label>Senha</label>
-            <input name="senha" type="password" placeholder="Mínimo 8 caracteres" required>
+        <label>CPF:</label>
+        <input name="cpf" type="text" required>
 
-            <label>CPF:</label>
-            <input name="cpf" size="15" required placeholder="000.000.000-00" required>
+        <label>Data de nascimento:</label>
+        <input name="data_nasc" type="date" required>
 
-            <label>Data de nascimento:</label>
-            <input name="nasc" type="date" required>
+        <label>Senha:</label>
+        <input type="password" name="senha" required>
 
-            <label>Senha:</label> 
-            <input name="senha" size="40" type="password" required>
+        <label>CEP:</label>
+        <input type="text" name="cep" required>
 
-            <label>CEP:</label>
-            <input name="cep" size="10" required placeholder="00000-000" required>
+        <button type="submit" name="inserir">
+            CADASTRAR
+        </button>
 
-            <button type="submit" name="inserir">Cadastrar</button>
-        </form>
+    </form>
 
-        <p class="footer-link">Já tem conta? <a href="login.php">Entrar</a></p>
-    </div>
+<?php
+
+include "conexao.php";
+
+/* =========================
+   VALIDAR CPF
+========================= */
+
+function validarCPF($cpf){
+
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+    if(strlen($cpf) != 11){
+        return false;
+    }
+
+    if(preg_match('/(\d)\1{10}/', $cpf)){
+        return false;
+    }
+
+    for ($t = 9; $t < 11; $t++) {
+
+        $soma = 0;
+
+        for ($i = 0; $i < $t; $i++) {
+            $soma += $cpf[$i] * (($t + 1) - $i);
+        }
+
+        $digito = ((10 * $soma) % 11) % 10;
+
+        if ($cpf[$t] != $digito) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/* =========================
+   CADASTRAR
+========================= */
+
+if(isset($_POST['inserir'])){
+
+    $nome = mysqli_real_escape_string($conexao, $_POST['nome']);
+    $email_tel = mysqli_real_escape_string($conexao, $_POST['email_tel']);
+    $cpf = mysqli_real_escape_string($conexao, $_POST['cpf']);
+    $data_nasc = mysqli_real_escape_string($conexao, $_POST['data_nasc']);
+    $senha = $_POST['senha'];
+    $cep = mysqli_real_escape_string($conexao, $_POST['cep']);
+
+    /* =========================
+       VALIDAR SENHA
+    ========================= */
+
+    $senhavalida = preg_match(
+        '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+        $senha
+    );
+
+    /* =========================
+       VALIDAR EMAIL
+    ========================= */
+
+    $emailvalido = filter_var($email_tel, FILTER_VALIDATE_EMAIL);
+
+    /* =========================
+       VALIDAR TELEFONE
+    ========================= */
+
+    $somenteNumerosTel = preg_replace('/[^0-9]/', '', $email_tel);
+
+    $telefonevalido = (
+        strlen($somenteNumerosTel) >= 10 &&
+        strlen($somenteNumerosTel) <= 11
+    );
+
+    /* =========================
+       VALIDAR CPF
+    ========================= */
+
+    $somenteNumerosCPF = preg_replace('/[^0-9]/', '', $cpf);
+
+    $cpfvalido = validarCPF($somenteNumerosCPF);
+
+    /* =========================
+       VERIFICAR EMAIL DUPLICADO
+    ========================= */
+
+    $verificaEmail = mysqli_query(
+        $conexao,
+        "SELECT * FROM cadastro WHERE email_tel = '$email_tel'"
+    );
+
+    $emailExiste = mysqli_num_rows($verificaEmail);
+
+    /* =========================
+       VERIFICAR CPF DUPLICADO
+    ========================= */
+
+    $verificaCPF = mysqli_query(
+        $conexao,
+        "SELECT * FROM cadastro"
+    );
+
+    $cpfExiste = false;
+
+    while($usuario = mysqli_fetch_assoc($verificaCPF)){
+
+        if(password_verify($somenteNumerosCPF, $usuario['cpf'])){
+            $cpfExiste = true;
+            break;
+        }
+    }
+
+    /* =========================
+       VALIDAÇÕES
+    ========================= */
+
+    if(!$senhavalida){
+
+        echo "
+        <div class='mensagem'>
+            A senha deve conter:
+            <br><br>
+            • 8 caracteres
+            <br>
+            • letra maiúscula
+            <br>
+            • letra minúscula
+            <br>
+            • número
+            <br>
+            • símbolo
+        </div>";
+
+    }
+
+    elseif(!$cpfvalido){
+
+        echo "
+        <div class='mensagem'>
+            CPF inválido!
+        </div>";
+
+    }
+
+    elseif(!$emailvalido && !$telefonevalido){
+
+        echo "
+        <div class='mensagem'>
+            E-mail ou telefone inválido!
+        </div>";
+
+    }
+
+    elseif($emailExiste){
+
+        echo "
+        <div class='mensagem'>
+            Este e-mail/telefone já está cadastrado!
+        </div>";
+
+    }
+
+    elseif($cpfExiste){
+
+        echo "
+        <div class='mensagem'>
+            Este CPF já está cadastrado!
+        </div>";
+
+    }
+
+    else{
+
+        /* =========================
+           CRIPTOGRAFAR SENHA
+        ========================= */
+
+        $senha_crip = password_hash($senha, PASSWORD_DEFAULT);
+
+        /* =========================
+           CRIPTOGRAFAR CPF
+        ========================= */
+
+        $cpf_crip = password_hash($somenteNumerosCPF, PASSWORD_DEFAULT);
+
+        /* =========================
+           INSERT
+        ========================= */
+
+        $sql = mysqli_query($conexao,
+        "INSERT INTO cadastro
+        (nome, email_tel, cpf, data_nasc, senha, cep)
+
+        VALUES
+
+        ('$nome',
+        '$email_tel',
+        '$cpf_crip',
+        '$data_nasc',
+        '$senha_crip',
+        '$cep')");
+
+        if($sql){
+
+            echo "
+            <div class='mensagem'>
+                Cadastro realizado com sucesso!
+            </div>";
+
+            echo "
+            <script>
+                setTimeout(function(){
+                    window.location='inicio.php';
+                }, 2000);
+            </script>";
+
+        } else {
+
+            echo "
+            <div class='mensagem'>
+                Erro ao cadastrar:
+                ".mysqli_error($conexao)."
+            </div>";
+        }
+    }
+}
+
+?>
+
 </div>
 </body>
 </html>
