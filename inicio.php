@@ -1,139 +1,338 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Unistore</title>
 
+<!-- FONTES -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-    }
 
-    body {
-         background-image: url("./unicorniocerto.png"); *A IMAGEM TEM QUE ESTAR NA MESMA PASTA QUE OS CÓDIGOS*
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 500px; 
-        background-position: left bottom;
-        
-    }
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    /* NAVBAR */
-    header {
-        background: #f8c8dc;
-        padding: 15px 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+/* BODY */
+body{
+    background:#fff7fb;
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+}
 
-    header h2 {
-        color: #8b3a62;
-    }
+/* NAVBAR */
+header{
+    width:100%;
+    padding:20px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    nav a {
-        margin: 0 10px;
-        text-decoration: none;
-        color: #8b3a62;
-        font-size: 14px;
-    }
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
 
-    .buttons {
-        display: flex;
-        gap: 10px;
-    }
+    position:fixed;
+    top:0;
+    z-index:1000;
+}
 
-    .btn {
-        padding: 6px 12px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 14px;
-    }
+/* LOGO */
+.logo{
+    font-family:'Cinzel', serif;
+    font-size:34px;
+    color:#8b3a62;
+    letter-spacing:2px;
+}
 
-    .btn-login {
-        border: 1px solid #8b3a62;
-        color: #8b3a62;
-    }
+/* MENU */
+nav a{
+    text-decoration:none;
+    margin:0 15px;
+    color:#7a4560;
+    font-weight:500;
+    transition:0.3s;
+    position:relative;
+}
 
-    .btn-register {
-        background: #d63384;
-        color: white;
-    }
+nav a:hover{
+    color:#d63384;
+}
 
-    /* HERO */
-    .hero {
-        height: 75vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        text-align: center;
+nav a::after{
+    content:"";
+    width:0%;
+    height:2px;
+    background:#d63384;
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    transition:0.3s;
+}
 
-        /* ✅ FUNDO CORRIGIDO */
-        background-image: url("unicornio.jpg."); /* 🔥 TROQUE PELO NOME CERTO */
+nav a:hover::after{
+    width:100%;
+}
 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
+/* BOTÕES HEADER */
+.buttons{
+    display:flex;
+    gap:12px;
+}
 
-    .hero h1 {
-        font-size: 50px;
-        color: #8b3a62;
-        margin-bottom: 20px;
-    }
+.btn{
+    padding:12px 22px;
+    border-radius:30px;
+    text-decoration:none;
+    transition:0.3s;
+    font-size:14px;
+    font-weight:500;
+}
 
-    .hero input {
-        padding: 10px;
-        border-radius: 20px;
-        border: 1px solid #f8c8dc;
-        outline: none;
-    }
+/* LOGIN CLIENTE/VENDEDOR (HEADER) */
+.btn-login{
+    border:1px solid #8b3a62;
+    color:#8b3a62;
+    background:white;
+}
 
-    .hero button {
-        padding: 10px 15px;
-        border-radius: 20px;
-        background: #d63384;
-        color: white;
-        border: none;
-        cursor: pointer;
-        margin-left: 10px;
-    }
+.btn-login:hover{
+    background:#8b3a62;
+    color:white;
+}
 
-    .hero button:hover {
-        background: #c2186a;
-    }
+/* CRIAR CONTA */
+.btn-register{
+    background:linear-gradient(45deg,#ff4fa3,#ffb3d9,#ffd6a5);
+    color:white;
+    box-shadow:0 4px 15px rgba(255,79,163,0.35);
+}
+
+.btn-register:hover{
+    transform:translateY(-3px) scale(1.05);
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+
+    background-image:
+    linear-gradient(
+    rgba(255,255,255,0.45),
+    rgba(255,255,255,0.45)),
+    url("unicorniocerto.png");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* CONTEÚDO HERO */
+.hero-content{
+    max-width:700px;
+    padding:20px;
+}
+
+/* TÍTULO */
+.hero h1{
+    font-family:'Cinzel', serif;
+    font-size:80px;
+    color:#8b3a62;
+}
+
+/* TEXTO */
+.hero p{
+    font-size:22px;
+    color:#5e3550;
+    margin-bottom:40px;
+}
+
+/* BOTÕES HERO */
+.login-options{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+/* BOTÕES GERAIS */
+.magic-btn{
+    padding:15px 30px;
+    border:none;
+    border-radius:40px;
+    font-size:16px;
+    cursor:pointer;
+    text-decoration:none;
+    color:white;
+    transition:0.4s;
+}
+
+/* CLIENTE (ROSA CLARO) */
+.cliente{
+    background:linear-gradient(45deg,#ff9ecb,#ff4fa3);
+}
+
+/* VENDEDOR (ROSA FORTE) */
+.vendedor{
+    background:linear-gradient(45deg,#ff006e,#ff2d95);
+}
+
+/* HOVER */
+.magic-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+}
+
+/* CADASTRO LINK */
+.cadastro-link a{
+    text-decoration:none;
+    color:#8b3a62;
+    font-weight:600;
+    font-size:19px;
+}
+
+.cadastro-link a:hover{
+    color:#d63384;
+}
+
+/* TÓPICOS */
+.topicos{
+    padding:100px 40px;
+    text-align:center;
+    background:white;
+}
+
+.topicos h2{
+    font-family:'Cinzel', serif;
+    font-size:48px;
+    color:#8b3a62;
+    margin-bottom:60px;
+}
+
+/* CARDS */
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+}
+
+.card{
+    width:260px;
+    padding:35px 25px;
+    border-radius:25px;
+    background:linear-gradient(180deg,#ffe4f3,#fff);
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card h3{
+    color:#8b3a62;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#666;
+}
 
 </style>
 
 </head>
+
 <body>
 
 <header>
-    <h2>Unistore</h2>
+
+    <div class="logo">Unistore ✨</div>
 
     <nav>
         <a href="#">Produtos</a>
-        <a href="#">Soluções</a>
-        <a href="#">Comunidade</a>
+        <a href="#">Categorias</a>
+        <a href="#">Promoções</a>
+        <a href="#">Contato</a>
     </nav>
 
     <div class="buttons">
-        <a href="login.php" class="btn btn-login">Entrar</a>
-        <a href="cadastro.php" class="btn btn-register">Cadastrar</a>
+
+        <a href="login_cliente.php" class="btn btn-login">Cliente</a>
+        <a href="login_vendedor.php" class="btn btn-login">Vendedor</a>
+        <a href="cadastro.php" class="btn btn-register">Criar Conta</a>
+
     </div>
+
 </header>
 
 <section class="hero">
-    <h1>Unistore</h1>
 
-    <div>
-        <input type="email" placeholder="Digite seu email">
-        <button>Enviar</button>
+    <div class="hero-content">
+
+        <h1>Unistore</h1>
+
+        <p>Um mundo mágico para suas compras ✨</p>
+
+        <div class="login-options">
+
+            <a href="login_cliente.php" class="magic-btn cliente">
+                Entrar como Cliente
+            </a>
+
+            <a href="login_vendedor.php" class="magic-btn vendedor">
+                Entrar como Vendedor
+            </a>
+
+        </div>
+
+        <div class="cadastro-link">
+            <a href="cadastro.php">✨ Criar uma nova conta</a>
+        </div>
+
     </div>
+
+</section>
+
+<section class="topicos">
+
+    <h2>Explore a Magia</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🛍 Produtos</h3>
+            <p>Descubra itens mágicos e exclusivos.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔥 Promoções</h3>
+            <p>Aproveite descontos encantadores.</p>
+        </div>
+
+        <div class="card">
+            <h3>🌙 Comunidade</h3>
+            <p>Conheça aventureiros da Unistore.</p>
+        </div>
+
+        <div class="card">
+            <h3>📦 Pedidos</h3>
+            <p>Acompanhe suas compras facilmente.</p>
+        </div>
+
+    </div>
+
 </section>
 
 </body>
