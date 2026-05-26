@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -12,6 +11,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+
+html{
+    scroll-behavior:smooth;
+}
 
 /* RESET */
 *{
@@ -95,7 +98,7 @@ nav a:hover::after{
     font-weight:500;
 }
 
-/* LOGIN CLIENTE/VENDEDOR (HEADER) */
+/* LOGIN */
 .btn-login{
     border:1px solid #8b3a62;
     color:#8b3a62;
@@ -138,20 +141,18 @@ nav a:hover::after{
     text-align:center;
 }
 
-/* CONTEÚDO HERO */
+/* HERO CONTENT */
 .hero-content{
     max-width:700px;
     padding:20px;
 }
 
-/* TÍTULO */
 .hero h1{
     font-family:'Cinzel', serif;
     font-size:80px;
     color:#8b3a62;
 }
 
-/* TEXTO */
 .hero p{
     font-size:22px;
     color:#5e3550;
@@ -167,7 +168,6 @@ nav a:hover::after{
     margin-bottom:30px;
 }
 
-/* BOTÕES GERAIS */
 .magic-btn{
     padding:15px 30px;
     border:none;
@@ -179,22 +179,18 @@ nav a:hover::after{
     transition:0.4s;
 }
 
-/* CLIENTE (ROSA CLARO) */
 .cliente{
     background:linear-gradient(45deg,#ff9ecb,#ff4fa3);
 }
 
-/* VENDEDOR (ROSA FORTE) */
 .vendedor{
     background:linear-gradient(45deg,#ff006e,#ff2d95);
 }
 
-/* HOVER */
 .magic-btn:hover{
     transform:translateY(-5px) scale(1.05);
 }
 
-/* CADASTRO LINK */
 .cadastro-link a{
     text-decoration:none;
     color:#8b3a62;
@@ -215,7 +211,7 @@ nav a:hover::after{
 
 .topicos h2{
     font-family:'Cinzel', serif;
-    font-size:48px;
+    font-size:38px;
     color:#8b3a62;
     margin-bottom:60px;
 }
@@ -250,6 +246,162 @@ nav a:hover::after{
     color:#666;
 }
 
+/* PRODUTOS */
+.produtos{
+    padding:100px 40px;
+    background:#fff7fb;
+    text-align:center;
+}
+
+.produtos h2{
+    font-family:'Cinzel', serif;
+    font-size:38px;
+    color:#8b3a62;
+    margin-bottom:10px;
+}
+
+/* SUBTÍTULO ALTERADO */
+.subtitulo{
+    font-family:'Poppins', sans-serif;
+    font-size:16px;
+    font-weight:400;
+    color:#b05c85;
+    margin-bottom:50px;
+}
+
+/* GRID */
+.produtos-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap:30px;
+    max-width:1100px;
+    margin:0 auto;
+}
+
+/* CARD PRODUTO */
+.produto-card{
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:0.4s;
+}
+
+.produto-card:hover{
+    transform:translateY(-10px);
+}
+
+/* IMAGEM */
+.produto-img{
+    width:100%;
+    height:220px;
+    background:#ffe4f3;
+    overflow:hidden;
+}
+
+.produto-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* INFO */
+.produto-info{
+    padding:22px;
+    text-align:left;
+}
+
+.produto-info h3{
+    color:#8b3a62;
+    margin-bottom:8px;
+}
+
+.produto-info p{
+    color:#666;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.preco{
+    color:#d63384;
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+/* BOTÃO PRODUTO */
+.btn-produto{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:20px;
+    text-decoration:none;
+    background:linear-gradient(45deg,#ff4fa3,#ff85c2);
+    color:white;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.btn-produto:hover{
+    transform:scale(1.05);
+    opacity:0.9;
+}
+
+/* BOTÃO VER MAIS */
+.ver-mais-container{
+    margin-top:50px;
+    text-align:center;
+}
+
+.btn-ver-mais{
+    display:inline-block;
+    padding:14px 34px;
+    border-radius:35px;
+    text-decoration:none;
+    background:linear-gradient(45deg,#ff4fa3,#ff85c2);
+    color:white;
+    font-size:16px;
+    font-weight:500;
+    transition:0.3s;
+    box-shadow:0 6px 18px rgba(255,79,163,0.25);
+}
+
+.btn-ver-mais:hover{
+    transform:translateY(-4px) scale(1.05);
+    opacity:0.92;
+}
+
+/* FOOTER */
+footer{
+    padding:30px;
+    text-align:center;
+    background:white;
+    color:#8b3a62;
+}
+
+/* RESPONSIVO */
+@media(max-width:768px){
+
+    header{
+        padding:18px 25px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .hero h1{
+        font-size:52px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .topicos h2,
+    .produtos h2{
+        font-size:36px;
+    }
+
+}
+
 </style>
 
 </head>
@@ -261,17 +413,15 @@ nav a:hover::after{
     <div class="logo">Unistore ✨</div>
 
     <nav>
-        <a href="#">Produtos</a>
-        <a href="#">Categorias</a>
-        <a href="#">Promoções</a>
-        <a href="#">Contato</a>
+        <a href="#produtos">PRODUTOS</a>
+        <a href="#sobre">SOBRE NÓS</a>
     </nav>
 
     <div class="buttons">
 
         <a href="login_cliente.php" class="btn btn-login">Cliente</a>
         <a href="login_vendedor.php" class="btn btn-login">Vendedor</a>
-        <a href="cadastro.php" class="btn btn-register">Criar Conta</a>
+        <a href="cadastro.php" class="btn btn-register">Criar Conta ✨</a>
 
     </div>
 
@@ -305,9 +455,9 @@ nav a:hover::after{
 
 </section>
 
-<section class="topicos">
+<section class="topicos" id="sobre">
 
-    <h2>Explore a Magia</h2>
+    <h2>POR QUE USAR A UNISTORE?</h2>
 
     <div class="cards">
 
@@ -334,6 +484,126 @@ nav a:hover::after{
     </div>
 
 </section>
+
+<!-- PRODUTOS -->
+<section class="produtos" id="produtos">
+
+    <h2>EXPLORE A MAGIA</h2>
+
+    <p class="subtitulo">
+        Navegue por nossos produtos 👇
+    </p>
+
+    <div class="produtos-container">
+
+        <!-- PRODUTO 1 -->
+        <div class="produto-card">
+
+            <div class="produto-img">
+                <img src="produto1.jpg" alt="Produto 1">
+            </div>
+
+            <div class="produto-info">
+
+                <h3>Produto 1</h3>
+
+                <p>Descrição curta do produto.</p>
+
+                <div class="preco">R$ 00,00</div>
+
+                <a href="login.php" class="btn-produto">
+                    Ver produto
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PRODUTO 2 -->
+        <div class="produto-card">
+
+            <div class="produto-img">
+                <img src="produto2.jpg" alt="Produto 2">
+            </div>
+
+            <div class="produto-info">
+
+                <h3>Produto 2</h3>
+
+                <p>Descrição curta do produto.</p>
+
+                <div class="preco">R$ 00,00</div>
+
+                <a href="login.php" class="btn-produto">
+                    Ver produto
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PRODUTO 3 -->
+        <div class="produto-card">
+
+            <div class="produto-img">
+                <img src="produto3.jpg" alt="Produto 3">
+            </div>
+
+            <div class="produto-info">
+
+                <h3>Produto 3</h3>
+
+                <p>Descrição curta do produto.</p>
+
+                <div class="preco">R$ 00,00</div>
+
+                <a href="login.php" class="btn-produto">
+                    Ver produto
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PRODUTO 4 -->
+        <div class="produto-card">
+
+            <div class="produto-img">
+                <img src="produto4.jpg" alt="Produto 4">
+            </div>
+
+            <div class="produto-info">
+
+                <h3>Produto 4</h3>
+
+                <p>Descrição curta do produto.</p>
+
+                <div class="preco">R$ 00,00</div>
+
+                <a href="login.php" class="btn-produto">
+                    Ver produto
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTÃO VER MAIS -->
+<div class="ver-mais-container">
+
+    <a href="login.php" class="btn-ver-mais">
+        ✨ VER MAIS
+    </a>
+
+</div>
+
+</section>
+
+<footer>
+    logo
+</footer>
 
 </body>
 </html>
