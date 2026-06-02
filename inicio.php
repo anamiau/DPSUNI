@@ -38,12 +38,15 @@ header{
     justify-content:space-between;
     align-items:center;
 
-    background:rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px);
+    background:rgba(255, 214, 234, 0.88);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.4);
 
     position:fixed;
     top:0;
     z-index:1000;
+
+    box-shadow:0 4px 20px rgba(139,58,98,0.08);
 }
 
 /* LOGO */
@@ -55,10 +58,26 @@ header{
 }
 
 /* MENU */
+nav a {
+    text-decoration: none;
+    margin: 0 15px;
+    color: #8b3a62;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;        /* deixa mais bold, igual aos cards */
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+    position: relative;
+}
+
+nav a:hover {
+    color: #d63384;
+}
+
 nav a{
     text-decoration:none;
     margin:0 15px;
-    color:#7a4560;
+    color:#8b3a62;
     font-weight:500;
     transition:0.3s;
     position:relative;
@@ -66,21 +85,6 @@ nav a{
 
 nav a:hover{
     color:#d63384;
-}
-
-nav a::after{
-    content:"";
-    width:0%;
-    height:2px;
-    background:#d63384;
-    position:absolute;
-    left:0;
-    bottom:-5px;
-    transition:0.3s;
-}
-
-nav a:hover::after{
-    width:100%;
 }
 
 /* BOTÕES HEADER */
@@ -99,37 +103,48 @@ nav a:hover::after{
 }
 
 /* LOGIN */
-.btn-login{
-    border:1px solid #8b3a62;
-    color:#8b3a62;
-    background:white;
+.btn-login {
+    border: 1.5px solid #c76b96;
+    color: #8b3a62;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 2px 10px rgba(139,58,98,0.12);
+    letter-spacing: 0.3px;
 }
 
-.btn-login:hover{
-    background:#8b3a62;
-    color:white;
+.btn-login:hover {
+    background: #8b3a62;
+    color: white;
+    border-color: #8b3a62;
+    box-shadow: 0 6px 18px rgba(139,58,98,0.28);
+    transform: translateY(-2px);
 }
 
-/* CRIAR CONTA */
-.btn-register{
-    background:linear-gradient(45deg,#ff4fa3,#ffb3d9,#ffd6a5);
-    color:white;
-    box-shadow:0 4px 15px rgba(255,79,163,0.35);
+/* CRIAR CONTA — mesmo gradiente do botão hero */
+.btn-register {
+    background: linear-gradient(135deg, #ff4fa3, #ff85c2, #ffd6a5);
+    color: white;
+    box-shadow: 0 6px 18px rgba(255,79,163,0.35);
+    border: none;
 }
 
-.btn-register:hover{
-    transform:translateY(-3px) scale(1.05);
+.btn-register:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(255,79,163,0.5);
 }
 
 /* HERO */
 .hero{
     height:100vh;
 
-    background-image:
-    linear-gradient(
-    rgba(255,255,255,0.45),
-    rgba(255,255,255,0.45)),
-    url("unicorniocerto.png");
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.15)
+        ),
+        url("unicorniocerto.png");
 
     background-size:cover;
     background-position:center;
@@ -139,46 +154,109 @@ nav a:hover::after{
     justify-content:center;
     align-items:center;
     text-align:center;
+
+    position:relative;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,0.15),
+            rgba(255,255,255,0)
+        );
+
+    pointer-events:none;
 }
 
 /* HERO CONTENT */
 .hero-content{
-    max-width:700px;
+    max-width:800px;
     padding:20px;
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 .hero h1{
     font-family:'Cinzel', serif;
-    font-size:80px;
-    color:#8b3a62;
+    font-size:150px;
+    color:white;
+    letter-spacing:4px;
+
+    text-shadow:
+        0 0 10px rgba(249, 234, 181, 0.92),
+        0 0 25px rgba(255, 244, 171, 0.82),
+        0 4px 15px rgba(0,0,0,.35);
 }
 
 .hero p{
-    font-size:22px;
-    color:#5e3550;
-    margin-bottom:40px;
-}
-
-/* BOTÕES HERO */
-.login-options{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-    margin-bottom:30px;
-}
-
-.magic-btn{
-    padding:15px 30px;
-    border:none;
-    border-radius:40px;
-    font-size:16px;
-    cursor:pointer;
-    text-decoration:none;
+    font-size:24px;
     color:white;
-    transition:0.4s;
+    font-weight:300;
+    text-shadow:0 2px 10px rgba(0,0,0,.4);
 }
 
+.hero-btn{
+    display:inline-block;
+    margin-top:10px;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+    text-decoration:none;
+
+    background:linear-gradient(
+        135deg,
+        #ff4fa3,
+        #ff85c2,
+        #ffd6a5
+    );
+
+    color:white;
+    font-size:18px;
+    font-weight:500;
+    letter-spacing:1px;
+
+    box-shadow:
+        0 10px 30px rgba(255,79,163,0.35),
+        0 0 20px rgba(255,214,165,0.25);
+
+    transition:all .35s ease;
+}
+
+.hero-btn:hover{
+    transform:translateY(-5px) scale(1.06);
+
+    box-shadow:
+        0 15px 35px rgba(255,79,163,0.5),
+        0 0 25px rgba(255,214,165,0.4);
+}
+
+.hero-btn:hover{
+    transform:translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(255,79,163,.6);
+}
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:60px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+}
 .cliente{
     background:linear-gradient(45deg,#ff9ecb,#ff4fa3);
 }
@@ -405,23 +483,27 @@ footer{
 </style>
 
 </head>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
 <body>
 
 <header>
 
-    <div class="logo">Unistore ✨</div>
-
+<div class="logo">
+    <img src="logo" alt="Logo Unistore" class="logo-img">
+    Unistore ✨
+</div>
     <nav>
+    <a href="#sobre">SOBRE NÓS</a>
         <a href="#produtos">PRODUTOS</a>
-        <a href="#sobre">SOBRE NÓS</a>
     </nav>
 
     <div class="buttons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
-        <a href="login_cliente.php" class="btn btn-login">Cliente</a>
-        <a href="login_vendedor.php" class="btn btn-login">Vendedor</a>
-        <a href="cadastro.php" class="btn btn-register">Criar Conta ✨</a>
+    <a href="login.php" class="btn btn-login">
+    <i class="ti ti-user"></i> Login</a> 
+<a href="cadastro.php" class="btn btn-register">Criar Conta</a>
 
     </div>
 
@@ -431,27 +513,15 @@ footer{
 
     <div class="hero-content">
 
-        <h1>Unistore</h1>
+    <h1>UNISTORE</h1>
 
-        <p>Um mundo mágico para suas compras ✨</p>
+    <a href="cadastro.php" class="hero-btn">
+        ✨ Criar conta
+    </a>
 
-        <div class="login-options">
+</div>
 
-            <a href="login_cliente.php" class="magic-btn cliente">
-                Entrar como Cliente
-            </a>
-
-            <a href="login_vendedor.php" class="magic-btn vendedor">
-                Entrar como Vendedor
-            </a>
-
-        </div>
-
-        <div class="cadastro-link">
-            <a href="cadastro.php">✨ Criar uma nova conta</a>
-        </div>
-
-    </div>
+</section>
 
 </section>
 
